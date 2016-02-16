@@ -34,7 +34,8 @@ GITHUB_API_TOKEN = 'OPR_GITHUB_API_TOKEN'
 @click.command()
 @click.argument('base')
 @click.option('-m', '--message', default="", help='Description of your pull request')
-def opr(base, message):
+@click.option('-t', '--title', default="", help='The title of your pull request (default is your branch name).')
+def opr(base, message, title):
 
     if GITHUB_API_TOKEN not in os.environ:
         click.secho(u'OPR_GITHUB_API_TOKEN must be an environment variable.', fg='red')
@@ -53,6 +54,11 @@ def opr(base, message):
     else:
         click.secho(u'Only ssh cloned repos are supported (for now.)', fg='red')
         sys.exit(2)
+    
+    if not title:
+        # Adapted from Stack Overflow: http://stackoverflow.com/a/5020947
+        title = re.sub(r'([a-z])([A-Z])', r'\g<1> \g<2>', current_branch)
+        title = title.replace('_', ' ').replace('-', ' ')
         
     subprocess.call("git push origin " + current_branch, shell=True)  
     
@@ -63,7 +69,7 @@ def opr(base, message):
     url = 'https://api.github.com/repos/{}/{}/pulls'.format(repo_owner, repo_name)
     
     request_json = {
-        'title' : current_branch,
+        'title' : title,
         'body' : message,
         'base' : base,
         'head' : current_branch

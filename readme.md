@@ -7,13 +7,18 @@ Simple command line utility to open a GitHub PR from the command line.
 
 ```
 opr <base_branch> -m "Optional Message"
-
 ```
 
 So, if you are working on a branch named `736_FixScrolling`, and you want to open a PR against master, after you commit, all you have to type is:
 
 ```
 opr master
+```
+
+You can specify a title of your PR with the `-t` option. If you don't specify a title, `opr` will just use your current branch name as the title.
+
+```
+opr master -t "REVIEW THIS NOW SO I CAN GO TO THE BAR"
 ```
 
 If you want to add a message, you can use the `-m` option.
