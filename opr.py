@@ -50,6 +50,9 @@ def opr(base, message):
         matches = re.search(regex, origin_address)
         repo_owner = matches.group('repo_owner')
         repo_name = matches.group('repo_name')
+    else:
+        click.secho(u'Only ssh cloned repos are supported (for now.)', fg='red')
+        sys.exit(2)
         
     subprocess.call("git push origin " + current_branch, shell=True)  
     
