@@ -25,4 +25,5 @@ opr master -m "Sorry."
 ### Installation
 1. Clone this repo.
 2. Run `(sudo) pip install --editable .`
+3. [Create a GitHub personal access token](https://github.com/settings/tokens) for `opr` and set it as a shell environment variable `OPR_GITHUB_API_TOKEN`.
 

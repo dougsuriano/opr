@@ -37,7 +37,7 @@ GITHUB_API_TOKEN = 'OPR_GITHUB_API_TOKEN'
 def opr(base, message):
 
     if GITHUB_API_TOKEN not in os.environ:
-        click.echo('OPR_GITHUB_API_TOKEN must be an environment variable.', error=True)
+        click.secho(u'OPR_GITHUB_API_TOKEN must be an environment variable.', fg='red')
         sys.exit(2)
     
     github_token = os.environ[GITHUB_API_TOKEN]
@@ -72,7 +72,7 @@ def opr(base, message):
     r = requests.post(url, headers=headers, json=request_json)
     
     if r.status_code == 201:
-        pr_url = r.json()["url"]
+        pr_url = r.json()["html_url"]
         click.secho(u'Your PR has been opened! {}'.format(pr_url), fg='green')
     else:
         response = r
